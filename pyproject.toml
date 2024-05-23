@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "dvc-pipeline"
+version = "0.1.0"
+description = ""
+authors = ["Shun-Lung, Chang <shunlung.chang@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+dvc = "^3.50.2"
+pandas = "^2.2.2"
+scikit-learn = "^1.5.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.4"
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
