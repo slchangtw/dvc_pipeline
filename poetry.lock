@@ -1055,6 +1055,46 @@ docs = ["mkdocs (>=1.5.2,<2)", "mkdocs-gen-files (>=0.5.0,<1)", "mkdocs-material
 tests = ["pytest (>=7,<9)", "pytest-celery", "pytest-cov (>=4.1.0)", "pytest-mock", "pytest-rerunfailures", "pytest-sugar", "pytest-test-utils (>=0.0.6)"]
 
 [[package]]
+name = "dvclive"
+version = "3.46.0"
+description = "Experiments logger for ML projects."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "dvclive-3.46.0-py3-none-any.whl", hash = "sha256:7d95a42ca6da3bfae67d82d93d7759cbaaaa3c986456dc05e9c60205ab502948"},
+    {file = "dvclive-3.46.0.tar.gz", hash = "sha256:7ff1e48dfe01d5490105dcff352a7df7facbbd536d2d914b03d52146d422ac27"},
+]
+
+[package.dependencies]
+dvc = ">=3.48.4"
+dvc-render = ">=1.0.0,<2"
+dvc-studio-client = ">=0.20,<1"
+funcy = "*"
+gto = "*"
+psutil = "*"
+pynvml = "*"
+"ruamel.yaml" = "*"
+scmrepo = ">=3,<4"
+
+[package.extras]
+all = ["dvclive[catalyst,fastai,huggingface,image,lgbm,lightning,markdown,mmcv,optuna,plots,tf,xgb]"]
+catalyst = ["catalyst (>22)"]
+dev = ["dvclive[all,tests]", "mypy (==1.9.0)", "types-PyYAML"]
+fastai = ["fastai"]
+huggingface = ["datasets", "transformers"]
+image = ["numpy", "pillow"]
+lgbm = ["lightgbm"]
+lightning = ["jsonargparse[signatures] (>=4.26.1)", "lightning (>=2.0)", "torch"]
+markdown = ["matplotlib"]
+mmcv = ["mmcv"]
+optuna = ["optuna"]
+plots = ["numpy", "pandas", "scikit-learn"]
+sklearn = ["scikit-learn"]
+tests = ["dpath", "dvclive[image,markdown,plots]", "ipython", "pytest (>=7.2.0,<9.0)", "pytest-cov (>=3.0.0,<6.0)", "pytest-mock (>=3.8.2,<4.0)", "pytest-sugar (>=0.9.6,<2.0)", "pytest-voluptuous"]
+tf = ["tensorflow"]
+xgb = ["xgboost"]
+
+[[package]]
 name = "entrypoints"
 version = "0.4"
 description = "Discover and load entry points from installed packages."
@@ -2274,6 +2314,17 @@ files = [
 ]
 
 [[package]]
+name = "pynvml"
+version = "11.5.0"
+description = "Python Bindings for the NVIDIA Management Library"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "pynvml-11.5.0-py3-none-any.whl", hash = "sha256:5cce014ac01b098d08f06178f86c37be409b80b2e903a5a03ce15eed60f55e25"},
+    {file = "pynvml-11.5.0.tar.gz", hash = "sha256:d027b21b95b1088b9fc278117f9f61b7c67f8e33a787e9f83f735f0f71ac32d0"},
+]
+
+[[package]]
 name = "pyparsing"
 version = "3.1.2"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
@@ -3150,4 +3201,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "4f42b6399b7621d966885b166865d79097b3dc5f31663bee919d7ae7b6052856"
+content-hash = "e7a931d8693ecfc9d5a60e19070218f1804d54b8dd66ab44b89e615489265faa"
