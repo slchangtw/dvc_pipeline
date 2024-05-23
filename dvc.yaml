@@ -2,16 +2,29 @@ stages:
   process:
     cmd: python src/process.py
     deps:
-      - data/source/Housing.csv
-      - params.yaml # 
+    - data/source/Housing.csv
+    - params.yaml   # So that DVC can track changes in this file
     outs:
-      - data/train/train.csv
-      - data/test/test.csv
+    - data/train/train.csv
+    - data/test/test.csv
 
   train:
     cmd: python src/train.py
     deps:
-      - data/train/train.csv
-      - params.yaml
+    - data/train/train.csv
+    - params.yaml
     outs:
-      - models/model.pkl
+    - models/model.pkl
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - data/test/test.csv
+    - models/model.pkl
+    outs:
+    - metrics
+metrics:
+- metrics/metrics.json
+plots:
+- metrics/plots/metrics:
+    x: step
