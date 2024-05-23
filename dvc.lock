@@ -1,0 +1,38 @@
+schema: '2.0'
+stages:
+  process:
+    cmd: python src/process.py
+    deps:
+    - path: data/source/Housing.csv
+      hash: md5
+      md5: 801f8030dad1df22a53edfdbfa4e80f0
+      size: 29981
+    - path: params.yaml
+      hash: md5
+      md5: b164d7a45727d27b60badf8cd07e21e9
+      size: 184
+    outs:
+    - path: data/test/test.csv
+      hash: md5
+      md5: c43d2c5050528bec3f744d403e056ecb
+      size: 5658
+    - path: data/train/train.csv
+      hash: md5
+      md5: 7d873eb40f7ce8dad917ba3f42440fce
+      size: 22024
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/train/train.csv
+      hash: md5
+      md5: 7d873eb40f7ce8dad917ba3f42440fce
+      size: 22024
+    - path: params.yaml
+      hash: md5
+      md5: b164d7a45727d27b60badf8cd07e21e9
+      size: 184
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: 915e81552dbd222921a185899c92578c
+      size: 49305
