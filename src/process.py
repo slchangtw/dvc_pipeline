@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import yaml
 from sklearn.model_selection import train_test_split
@@ -25,6 +26,9 @@ def process_housing(housing: pd.DataFrame) -> pd.DataFrame:
 
     # One-hot encoding
     housing = pd.get_dummies(housing, columns=CATEGORY_COLUMNS)
+
+    # Logarize price
+    housing["price"] = housing["price"].apply(lambda x: np.log(x) + 1)
 
     return housing
 
