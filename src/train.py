@@ -14,7 +14,7 @@ def train(housing_train: pd.DataFrame, n_estimators: int) -> None:
     model = Pipeline(
         [
             ("scaler", MinMaxScaler()),
-            ("gbr", GradientBoostingRegressor(n_estimators=n_estimators)),
+            ("predictor", GradientBoostingRegressor(n_estimators=n_estimators)),
         ]
     )
     model.fit(X_train, y_train)
@@ -24,7 +24,7 @@ def train(housing_train: pd.DataFrame, n_estimators: int) -> None:
 
 if __name__ == "__main__":
     with open("params.yaml", "r") as f:
-        params = yaml.safe_load(f)
+        params = yaml.safe_load(f)["train"]
 
     housing_train = pd.read_csv(params["data_train_path"])
     model = train(housing_train, params["n_estimators"])

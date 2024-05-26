@@ -3,7 +3,22 @@ stages:
     cmd: python src/process.py
     deps:
     - data/source/Housing.csv
-    - params.yaml   # So that DVC can track changes in this file
+    params:
+    - process.data_source_path
+    - process.data_processed_path
+    outs:
+    - data/processed/processed.csv
+
+  split_data:
+    cmd: python src/split_data.py
+    deps:
+    - data/processed/processed.csv
+    params:
+    - split_data.test_size
+    - split_data.seed
+    - split_data.data_processed_path
+    - split_data.data_train_path
+    - split_data.data_test_path
     outs:
     - data/train/train.csv
     - data/test/test.csv
@@ -12,7 +27,10 @@ stages:
     cmd: python src/train.py
     deps:
     - data/train/train.csv
-    - params.yaml
+    params:
+    - train.n_estimators
+    - train.data_train_path
+    - train.model_path
     outs:
     - models/model.pkl
 
@@ -21,10 +39,14 @@ stages:
     deps:
     - data/test/test.csv
     - models/model.pkl
+    params:
+    - evaluate.data_train_path
+    - evaluate.data_test_path
+    - evaluate.model_path
     outs:
     - metrics
+plots:
+- eval/plots/images/importance.png
+- metrics/plots/images
 metrics:
 - metrics/metrics.json
-plots:
-- metrics/plots/metrics:
-    x: step

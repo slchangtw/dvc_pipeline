@@ -7,49 +7,74 @@ stages:
       hash: md5
       md5: 801f8030dad1df22a53edfdbfa4e80f0
       size: 29981
-    - path: params.yaml
+    params:
+      params.yaml:
+        process.data_processed_path: data/processed/processed.csv
+        process.data_source_path: data/source/Housing.csv
+    outs:
+    - path: data/processed/processed.csv
       hash: md5
-      md5: ef9e449398a969ab2d813ee5d2b0c848
-      size: 185
+      md5: a6db5e695310bc890bb18dcf47867820
+      size: 33261
+  split_data:
+    cmd: python src/split_data.py
+    deps:
+    - path: data/processed/processed.csv
+      hash: md5
+      md5: a6db5e695310bc890bb18dcf47867820
+      size: 33261
+    params:
+      params.yaml:
+        split_data.data_processed_path: data/processed/processed.csv
+        split_data.data_test_path: data/test/test.csv
+        split_data.data_train_path: data/train/train.csv
+        split_data.seed: 42
+        split_data.test_size: 0.2
     outs:
     - path: data/test/test.csv
       hash: md5
-      md5: 9655f88f2aac8bb003f8af826fd08947
-      size: 6811
+      md5: 85238e9263467d8374c6ddd6428a19ad
+      size: 6805
     - path: data/train/train.csv
       hash: md5
-      md5: 60808578ffa485130d0215979f283dcc
-      size: 26653
+      md5: 51a5ae95b1d572811d27226184136894
+      size: 26641
   train:
     cmd: python src/train.py
     deps:
     - path: data/train/train.csv
       hash: md5
-      md5: 60808578ffa485130d0215979f283dcc
-      size: 26653
-    - path: params.yaml
-      hash: md5
-      md5: ef9e449398a969ab2d813ee5d2b0c848
-      size: 185
+      md5: 51a5ae95b1d572811d27226184136894
+      size: 26641
+    params:
+      params.yaml:
+        train.data_train_path: data/train/train.csv
+        train.model_path: models/model.pkl
+        train.n_estimators: 130
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: 24a5b87ebea119a3ff0fc762d89463ff
-      size: 160131
+      md5: cfc59c4fda89d40f3783066dfb9198b8
+      size: 172761
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: data/test/test.csv
       hash: md5
-      md5: 9655f88f2aac8bb003f8af826fd08947
-      size: 6811
+      md5: 85238e9263467d8374c6ddd6428a19ad
+      size: 6805
     - path: models/model.pkl
       hash: md5
-      md5: 24a5b87ebea119a3ff0fc762d89463ff
-      size: 160131
+      md5: cfc59c4fda89d40f3783066dfb9198b8
+      size: 172761
+    params:
+      params.yaml:
+        evaluate.data_test_path: data/test/test.csv
+        evaluate.data_train_path: data/train/train.csv
+        evaluate.model_path: models/model.pkl
     outs:
     - path: metrics
       hash: md5
-      md5: 165c2eca7873b5522ca732516ea9a3f0.dir
-      size: 66
+      md5: 4b975d033489bb3e9f5b541a54fc6757.dir
+      size: 26009
       nfiles: 2
