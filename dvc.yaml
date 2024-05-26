@@ -1,4 +1,16 @@
-stages:
+artifacts: # Declaration of structured metadata describing artifacts used in the pipeline.
+  house-price-dataset:
+    path: data/source/Housing.csv
+    type: dataset
+    desc: Raw dataset for house price prediction on Kaggle (https://www.kaggle.com/datasets/yasserh/housing-prices-dataset)
+  house-price-predictor-model:
+    path: models/model.pkl
+    desc: Prediction model for house prices
+    type: model
+    labels: # Specify any labels you wish to add to the artifact
+    - regression
+    - house price
+stages: # Stages in the pipeline
   process:
     cmd: python src/process.py
     deps:
