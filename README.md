@@ -1,7 +1,7 @@
 # DVC Pipeline using House Prices dataset from Kaggle
 
 This project demonstrates how to use DVC to create a pipeline for a machine learning project. The dataset used is the House Prices dataset from Kaggle. The pipeline consists of the following steps:
-1. Processing data and 
+1. Processing data
 2. Splitting the data into training and testing sets
 3. Training a model
 4. Evaluating the model
@@ -82,7 +82,7 @@ dvc dag
 
 ## Running the pipeline
 
-1. The pipeline can be run by the command `dvc repro`. After the pipeline is run, a state file `dvc.lock` is created as a snapshot of the results. You can check the metrics of the pipeline by running the command `dvc metrics show`. Also, this pipeline generates a feature importance plot in the `metrics/plots` directory.
+The pipeline can be run by the command `dvc repro`. After the pipeline is run, a state file `dvc.lock` is created as a snapshot of the results. You can check the metrics of the pipeline by running the command `dvc metrics show`. Also, this pipeline generates a feature importance plot in the `metrics/plots` directory.
 
 ```
 Path                  mse.test    mse.train
@@ -90,11 +90,9 @@ metrics/metrics.json  0.06426     0.01621
 ```
 ![Imgur Image](https://imgur.com/BNHFxyg.jpg)
 
-2. If you modify parameters in `params.yaml`, such as n_estimators in the `train` stage, and then run `dvc repro`, the pipeline will execute again with the updated parameter. 
+## Run experiments with different parameters
 
-## Run experiments with different numbers of estimators
-
-1. To run experiments with different numbers of estimators, you can create a queue of experiments by the command below. The `--name` flag helps you to identify the experiment, and the `-S` flag sets the parameters. If you need to set multiple parameters,, you can append `-S parameter=value1,value2` to the command.
+1. To run experiments with different numbers of estimators, you can create a queue of experiments by the command below. The `--name` flag helps you to identify the experiment, and the `-S` flag sets the parameters. If you need to set multiple parameters, you can append `-S parameter=value1,value2` to the command.
 
 ```bash
 dvc exp run \
