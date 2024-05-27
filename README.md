@@ -27,6 +27,22 @@ pip install poetry
 poetry install
 ```
 
+## Add remote storage
+
+You can use remote storage to manage your data. In this project, we use AWS S3 as an example. The following command adds this remote storage to the project. `s3://dvc-pipline` is a bucket already created in AWS S3.
+```bash
+dvc remote add remote_storage s3://dvc-pipline
+```
+
+In `.dvc/config` file, you can see the remote storage configuration.
+
+```yaml
+[core]
+    remote = remote_storage
+['remote "remote_storage"']
+    url = s3://dvc-pipline
+```
+
 ## Taking a look at the pipeline
 
 The `dvc.yaml` file defines the pipeline that consists of multiple stages. Each stage in our workflow consists of a command to be executed, along with its dependencies, parameters, and outputs. Let's take the `process` stage as an example.
