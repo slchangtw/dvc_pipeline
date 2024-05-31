@@ -127,3 +127,14 @@ dvc exp run --run-all
 dvc exp show
 ```
 ![Imgur Image](https://imgur.com/KuxZjKT.jpg)
+
+## Use DVC Studio to share your experiments
+
+DVC Studio is a web-based interface that allows you to share your machine learning projects with your team. To set up DVC Studio, follow the steps outlined in this [guide](https://dvc.org/doc/studio/user-guide/experiments/create-a-project).
+
+To log in to DVC Studio from your console, use the command below. When you rerun your experiments, the results will be automatically pushed to DVC Studio.
+
+```bash
+dvc studio login
+```
+![Imgur](https://imgur.com/0ibVaiI.jpg)
