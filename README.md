@@ -29,9 +29,9 @@ poetry install
 
 ## Add remote storage
 
-You can use remote storage to manage your data. In this project, we use AWS S3 as an example. The following command adds this remote storage to the project. `s3://dvc-pipline` is a bucket already created in AWS S3.
+You can use remote storage to manage your data. In this project, we use AWS S3 as an example. The following command adds this remote storage to the project. `s3://dvc-pipeline` is a bucket already created in AWS S3.
 ```bash
-dvc remote add remote_storage s3://dvc-pipline
+dvc remote add remote_storage s3://dvc-pipeline
 ```
 
 In `.dvc/config` file, you can see the remote storage configuration.
@@ -40,7 +40,7 @@ In `.dvc/config` file, you can see the remote storage configuration.
 [core]
     remote = remote_storage
 ['remote "remote_storage"']
-    url = s3://dvc-pipline
+    url = s3://dvc-pipeline
 ```
 
 ## Taking a look at the pipeline
@@ -138,3 +138,9 @@ To log in to DVC Studio from your console, use the command below. When you rerun
 dvc studio login
 ```
 ![Imgur](https://imgur.com/0ibVaiI.jpg)
+
+## Register your model in DVC Studio
+
+After the model is trained, you can then register it in DVC Studio for future deployment. To register the model, first navigage to the tab `Models` in DVC Studio. You can see the model `house-price-predictor-model` as we defined it in the `dvc.yaml` file. 
+
+```bash
