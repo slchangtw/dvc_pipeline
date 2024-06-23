@@ -1,4 +1,4 @@
 [core]
     remote = remote_storage
 ['remote "remote_storage"']
-    url = s3://dvc-pipline
+    url = s3://dvc-pipeline-2024
