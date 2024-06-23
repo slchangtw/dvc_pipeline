@@ -10,10 +10,10 @@ split_data:
   data_test_path: data/test/test.csv
 
 train:
-  n_estimators: 130
+  n_estimators: 100
   data_train_path: data/train/train.csv
   model_path: models/model.pkl
-  
+
 
 evaluate:
   data_train_path: data/train/train.csv
