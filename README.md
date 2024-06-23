@@ -29,9 +29,9 @@ poetry install
 
 ## Add remote storage
 
-You can use remote storage to manage your data. In this project, we use AWS S3 as an example. The following command adds this remote storage to the project. `s3://dvc-pipline` is a bucket already created in AWS S3.
+You can use remote storage to manage your data. In this project, we use AWS S3 as an example. The following command adds this remote storage to the project. `s3://<bucket name>` is a bucket already created in AWS S3. In this turorial, we use `dvc-pipeline-2024` as the bucket name.
 ```bash
-dvc remote add remote_storage s3://dvc-pipline
+dvc remote add remote_storage s3://dvc-pipeline-2024
 ```
 
 In `.dvc/config` file, you can see the remote storage configuration.
@@ -40,7 +40,7 @@ In `.dvc/config` file, you can see the remote storage configuration.
 [core]
     remote = remote_storage
 ['remote "remote_storage"']
-    url = s3://dvc-pipline
+    url = s3://dvc-pipeline-2024
 ```
 
 ## Taking a look at the pipeline
@@ -128,13 +128,34 @@ dvc exp show
 ```
 ![Imgur Image](https://imgur.com/KuxZjKT.jpg)
 
-## Use DVC Studio to share your experiments
+## Use DVC Studio to track your experiments
 
-DVC Studio is a web-based interface that allows you to share your machine learning projects with your team. To set up DVC Studio, follow the steps outlined in this [guide](https://dvc.org/doc/studio/user-guide/experiments/create-a-project).
+DVC Studio is a web-based interface that allows you to share your machine learning projects with your team. To set up DVC Studio, follow the steps outlined in this [guide](https://dvc.org/doc/studio/user-guide/experiments/create-a-project). After the setup, when checking the summary of the project, you may see missing metrics since the metrics are tracked by DVC, therefore they are located in remote storgage instead of Github. 
 
-To log in to DVC Studio from your console, use the command below. When you rerun your experiments, the results will be automatically pushed to DVC Studio.
+![Imgur](https://i.imgur.com/nfRhG5I.png)
+
+
+To allow DVC Studio to access the metrics, you have to set up credentials for DVC Studio to access the metrics. First, navigate to the `Settings` tab of the project, and click `Data remotes / cloud storage credentials` section and add new credentials for the remote storage. Since we use AWS S3 as an example, the credentials should able to read S3 buckets.
+
+![Imgur](https://i.imgur.com/EstJaJ9.png)
+
+
+To allow your experiments to be automatically pushed to DVC Studio, you have to log in to DVC Studio from your console using the command below. 
 
 ```bash
 dvc studio login
 ```
-![Imgur](https://imgur.com/0ibVaiI.jpg)
+
+After reruning your experiments as described in the previous section, you can see the results in DVC Studio.
+
+![Imgur](https://i.imgur.com/tWux5Uy.png)
+
+## Managing ML model lifecycle with DVC Studio
+
+After the model is trained, you can then register it in DVC Studio for future deployment. To register the model, first navigage to the tab `Models` in DVC Studio. You can see the model `house-price-predictor-model` as we defined it in the `dvc.yaml` file. 
+
+![Imgur](https://imgur.com/Oclbw7T.jpg)
+![Imgur](https://i.imgur.com/M9bmq5Z.png)
+![Imgur](https://i.imgur.com/4ymCIeS.png)
+![Imgur](https://i.imgur.com/Mx1Jyxx.png)
+![Imgur](https://i.imgur.com/grvRJk4.png)
