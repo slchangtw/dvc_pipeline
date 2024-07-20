@@ -130,60 +130,63 @@ dvc exp show
 
 ## Use DVC Studio to track your experiments
 
-DVC Studio is a web-based interface that allows you to share your machine learning projects with your team. To set up DVC Studio, follow the steps outlined in this [guide](https://dvc.org/doc/studio/user-guide/experiments/create-a-project). After the setup, when checking the summary of the project, you may see missing metrics since the metrics are tracked by DVC, therefore they are located in remote storgage instead of Github. 
+### Setting up DVC Studio and adding credentials
+
+DVC Studio is a web-based interface that allows you to share your machine learning projects with your team. To set up DVC Studio, follow the steps outlined in this [guide](https://dvc.org/doc/studio/user-guide/experiments/create-a-project). After the setup, when checking the project summary, you may see missing metrics. This is because the metrics are tracked by DVC and are located in remote storage instead of GitHub.
 
 ![Imgur](https://i.imgur.com/nfRhG5I.png)
 
-
-To allow DVC Studio to access the metrics, you have to set up credentials for DVC Studio to access the metrics. First, navigate to the `Settings` tab of the project, and click `Data remotes / cloud storage credentials` section and add new credentials for the remote storage. Since we use AWS S3 as an example, the credentials should able to read S3 buckets.
+To allow DVC Studio to access the metrics, you need to set up credentials. First, navigate to the `Settings` tab of the project and click on the `Data remotes / cloud storage credentials` section. Then, add new credentials for the remote storage. For example, if you are using AWS S3, the credentials should have read access to the S3 buckets.
 
 ![Imgur](https://i.imgur.com/EstJaJ9.png)
 
+### Automatically pushing your experiments to DVC Studio
 
-To allow your experiments to be automatically pushed to DVC Studio, you have to log in to DVC Studio from your console using the command below:
+To enable automatic pushing of your experiments to DVC Studio, use the following command to log in from your console:
 
 ```bash
 dvc studio login
 ```
 
-After rerunning your experiments as described in the previous section, you can view the results in DVC Studio.
+Once you rerun your experiments as outlined in the previous section, you can view the results in DVC Studio.
 
 ![Imgur](https://i.imgur.com/tWux5Uy.png)
 
 ## Managing ML model lifecycle with DVC Studio
 
-Being trained with several experiments, a model would be matured enough and can be registered in stages such as `dev` for reviewing or `production` for deployment. After deploying the model, the jouney does not end here since the model needs to be monitored and retrained to avoid model degradation. In this section, we will see how to manage the ML model lifecycle with DVC Studio.
+After being trained with several experiments, a model can be matured and registered in stages such as `dev` for review or `production` for deployment. However, the journey does not end after deployment. The model must be monitored and retrained to prevent degradation. In this section, we will explore how to manage the ML model lifecycle with DVC Studio.
 
 ![Imgur](https://imgur.com/Oclbw7T.jpg)
 
 ### Registering your model with a new version
 
-Firstly, navigate to the `Models` tab, you can see `house-price-predictor-model` as we defined in the `dvc.yaml` file. Click `Register` and enter a version number and click `Register version` in the pop-up window.
+First, navigate to the `Models` tab where you will see the `house-price-predictor-model` as defined in the `dvc.yaml` file. Click `Register`, enter a version number, and then click `Register version` in the pop-up window.
 
-The registration will automatically create a annotated Git tag to the linked GitHub repository. You can check the tag in the `Code` tab of the repository. So, in the future, you can easily track version by using the tags.
+Registration will automatically create an annotated Git tag in the linked GitHub repository. You can view the tag in the `Code` tab of the repository. This makes it easy to track versions using the tags in the future.
 
 ![Imgur](https://i.imgur.com/M9bmq5Z.png)
 
 ### Moving your model to a stage
 
-After registering the model, you can move it to a stage. Click the `Assign stage` button and name the stage `dev`. After assigning the stage, a new tag is also created in the GitHub repository to indicate the stage.
+After registering the model, you can assign it to a stage. Click the `Assign stage` button and name the stage `dev`. Once the stage is assigned, a new tag is automatically created in the GitHub repository to reflect the stage.
+
 
 ![Imgur](https://i.imgur.com/4ymCIeS.png)
 
 ### Setting up GitHub Actions for deployment
 
-In the following scenario, we will move the model to the `prod` stage and you can imagine the model will be deployed. We will use GitHub Actions to emulate the deployment process. To do that, we have to add an access token to the GitHub repository so that GitHub Actions can access the DVC remote storage.
+In the following scenario, we will move the model to the `prod` stage, simulating its deployment. We will use GitHub Actions to emulate the deployment process. To enable this, you need to add an access token to the GitHub repository, allowing GitHub Actions to access the DVC remote storage.
 
-Navigate to the `Settings` tab of the project, and copy-paste the DVC Studio access token to the GitHub repository secrets, with the name `DVC_STUDIO_TOKEN`. You can see the flow as the screenshot below.
+Go to the `Settings` tab of the project and add the DVC Studio access token to the GitHub repository secrets with the name `DVC_STUDIO_TOKEN`. The process is illustrated in the screenshot below.
 
 ![Imgur](https://i.imgur.com/Mx1Jyxx.png)
 
-You can see a template Github Action workflow included in in the `.github` folder in the project. In a nutshell, the flow checks every tag creation event and see if the stage is `prod`. If so, the flow will download the model from the remote storage and deploy it (in this example, no deployment is done, just a message is printed). You can check a full explanation of this flow [here](https://dvc.org/doc/start/model-registry/model-cicd?tab=GitHub#detailed-explanation-of-the-cicd-templates).
+You can find a template GitHub Action workflow in the `.github` folder of the project. Essentially, this workflow triggers on every tag creation event and checks if the stage is `prod`. If the stage is `prod`, it will download the model from remote storage and deploy it (in this example, no actual deployment occurs; only a message is printed). For a detailed explanation of this workflow, see [here](https://dvc.org/doc/start/model-registry/model-cicd?tab=GitHub#detailed-explanation-of-the-cicd-templates).
 
 ### Deploying the model
 
-Now you can move the model to the `prod` stage as we did before. After that, you can see a GitHub Actions workflow is triggered and the printed message in the log.
+Now, move the model to the `prod` stage as before. After doing so, you should see that a GitHub Actions workflow is triggered and the printed message appears in the log.
 
 ![Imgur](https://i.imgur.com/grvRJk4.png)
 
-You can then repeat the above-mentioned steps create a new version of the model, assign it to the different stages to manage the ML model lifecycle.
+You can then repeat the above steps to create a new version of the model and assign it to different stages to manage the ML model lifecycle.
